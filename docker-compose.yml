@@ -12,7 +12,7 @@ services:
       - ./pg_data:/var/lib/postgresql/data
     restart: always
     env_file:
-      - default.env
+      - .env
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s

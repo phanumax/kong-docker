@@ -38,6 +38,8 @@ services:
       - KONG_TRUSTED_IPS=0.0.0.0/0,::/0
       - KONG_REAL_IP_RECURSIVE=on
       - KONG_DECLARATIVE_CONFIG=/opt/kong/kong.yaml
+      - KONG_SSL_CERT=${KONG_SSL_CERT}
+      - KONG_SSL_CERT_KEY=${KONG_SSL_CERT_KEY}
     volumes:
       - ./config/kong.yaml:/opt/kong/kong.yaml
       - ./ssl:/etc/kong/ssl:ro

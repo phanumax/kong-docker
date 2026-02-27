@@ -12,7 +12,7 @@ services:
       - ./pg_data:/var/lib/postgresql/data
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -37,16 +37,20 @@ services:
       - KONG_ADMIN_ERROR_LOG=/dev/stderr
       - KONG_TRUSTED_IPS=0.0.0.0/0,::/0
       - KONG_REAL_IP_RECURSIVE=on
+      - KONG_DECLARATIVE_CONFIG=/opt/kong/kong.yaml
+    volumes:
+      - ./config/kong.yaml:/opt/kong/kong.yaml
+      - ./ssl:/etc/kong/ssl:ro
     ports:
       - 80:8000
-      - 443:8443 
+      - 443:8443
       - 127.0.0.1:8001:8001
     healthcheck:
-      test: ["CMD", "kong", "health"]
+      test: [ "CMD", "kong", "health" ]
       interval: 5s
       timeout: 2s
       retries: 15
-    
+
   # https://github.com/pantsel/konga/issues/462#issuecomment-633209833
   konga:
     image: pantsel/konga
